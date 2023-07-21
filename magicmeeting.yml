@@ -1,0 +1,55 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+  name: fedora
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+# - task: Docker@2
+#   inputs:
+#     containerRegistry: 'dockerhub-gokalp'
+#     repository: 'azureagent'
+#     command: 'buildAndPush'
+#     Dockerfile: '**/Dockerfile'
+# - task: Gradle@3
+#   inputs:
+#     gradleWrapperFile: 'gradlew'
+#     tasks: 'build'
+#     publishJUnitResults: true
+#     testResultsFiles: '**/TEST-*.xml'
+#     codeCoverageToolOption: 'JaCoCo'
+#     codeCoverageClassFilesDirectories: 'build/classes/main/'
+#     javaHomeOption: 'JDKVersion'
+#     sonarQubeRunAnalysis: true
+#     sqGradlePluginVersionChoice: 'specify'
+#     sonarQubeGradlePluginVersion: '2.6.1'
+#     spotBugsAnalysis: true
+#     spotBugsGradlePluginVersionChoice: 'specify'
+#     spotbugsGradlePluginVersion: '4.7.0'
+#     - task: Bash@3
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#           # Write your commands here
+          
+#           echo 'Hello world'
+# - task: KubernetesManifest@1
+#   inputs:
+#     action: 'deploy'
+#     connectionType: 'kubernetesServiceConnection'
+#     kubernetesServiceConnection: 'rancher-local'
+#     namespace: 'default'
+#     manifests: 'azure-deploy.yaml'
