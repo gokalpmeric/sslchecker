@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSL Certificate Expiry Checker</title>
+</head>
+<body>
+    <h1>SSL Certificate Expiry Checker</h1>
+
+    <form action="/" method="post">
+        <label for="domain">Enter domain:</label>
+        <input type="text" id="domain" name="domain" required>
+        <button type="submit">Check</button>
+    </form>
+
+    <h2>Domains and Expiration Dates:</h2>
+    <ul>
+        {% for domain in domains %}
+            <li>{{ domain.name }} - {% if domain.expiration_date %}{{ domain.expiration_date }}{% else %}Not Checked Yet{% endif %}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
