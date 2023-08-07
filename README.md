@@ -91,4 +91,3 @@ This project is licensed under the MIT License.
 
 ## Acknowledgements
 
-A special thanks to Gokalp Meric for the creation and maintenance of this project.
