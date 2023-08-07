@@ -2,21 +2,86 @@
 <html>
 <head>
     <title>SSL Certificate Expiry Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #f0f8ff, #f4f4f4);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex-grow: 1;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            padding: 5px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+        .expiring-soon {
+            background-color: #f0e68c; /* yellow */
+        }
+    </style>
 </head>
 <body>
-    <h1>SSL Certificate Expiry Checker</h1>
+    <div class="container">
+        <h1>SSL Certificate Expiry Checker</h1>
 
-    <form action="/" method="post">
-        <label for="domain">Enter domain:</label>
-        <input type="text" id="domain" name="domain" required>
-        <button type="submit">Check</button>
-    </form>
+        <form action="/" method="post">
+            <label for="domain">Enter domain:</label>
+            <div class="input-wrapper">
+                <input type="text" id="domain" name="domain" required>
+                <button type="submit">Check</button>
+            </div>
+        </form>
 
-    <h2>Domains and Expiration Dates:</h2>
-    <ul>
-        {% for domain in domains %}
-            <li>{{ domain.name }} - {% if domain.expiration_date %}{{ domain.expiration_date }}{% else %}Not Checked Yet{% endif %}</li>
-        {% endfor %}
-    </ul>
+        <h2>Domains and Expiration Dates:</h2>
+        <ul>
+            {% for domain in domains %}
+                <li class="{% if domain.days_left >= 0 and domain.days_left <= 40 %}expiring-soon{% endif %}">{{ domain.name }} - {{ domain.expiration_date }} {% if domain.days_left >= 0 %}({{ domain.days_left }} days left to expire){% else %}(Expired){% endif %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <footer style="text-align: center; font-size: 12px; color: #777; margin-top: 20px;">
+        Created by Gokalp Meric
+    </footer>
 </body>
 </html>
