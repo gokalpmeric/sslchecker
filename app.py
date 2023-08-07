@@ -6,10 +6,19 @@ import threading
 import schedule
 import time
 import certifi
+import json
+import os
 
 app = Flask(__name__)
 
-domains = []
+DATA_FILE = '/app/data/domains.json'
+
+# Load domains from file if exists
+if os.path.exists(DATA_FILE):
+    with open(DATA_FILE, 'r') as file:
+        domains = json.load(file)
+else:
+    domains = []
 
 def get_certificate_expiration_date(hostname):
     try:
@@ -34,8 +43,12 @@ def check_domain_expiry():
             expiration_date = get_certificate_expiration_date(domain['name'])
             if expiration_date:
                 days_left = calculate_days_left(expiration_date)
-                domain['expiration_date'] = expiration_date
+                domain['expiration_date'] = expiration_date.strftime("%Y-%m-%d %H:%M:%S")
                 domain['days_left'] = days_left
+
+        # Save updates to file
+        with open(DATA_FILE, 'w') as file:
+            json.dump(domains, file)
 
 def schedule_check_domains():
     schedule.every(1).day.do(check_domain_expiry)
@@ -54,7 +67,7 @@ def index():
                 days_left = calculate_days_left(expiration_date)
                 domain_info = {
                     "name": domain_name,
-                    "expiration_date": expiration_date,
+                    "expiration_date": expiration_date.strftime("%Y-%m-%d %H:%M:%S"),
                     "days_left": days_left,
                 }
 
@@ -63,6 +76,10 @@ def index():
                     existing_domain.update(domain_info)
                 else:
                     domains.append(domain_info)
+
+                # Save updates to file
+                with open(DATA_FILE, 'w') as file:
+                    json.dump(domains, file)
 
     return render_template("index.html", domains=domains)
 

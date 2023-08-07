@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: ssl-checker
-        image: gokalpmeric/sslchecker:0.0.3
+        image: gokalpmeric/sslchecker:0.0.4
         ports:
         - containerPort: 5000
         volumeMounts:
