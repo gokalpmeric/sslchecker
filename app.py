@@ -82,6 +82,17 @@ def index():
                     json.dump(domains, file)
 
     return render_template("index.html", domains=domains)
+@app.route("/delete", methods=["POST"])
+def delete():
+    global domains
+    domain_name = request.form.get("domain_name")
+    domains = [d for d in domains if d['name'] != domain_name]
+
+    # Save updates to file
+    with open(DATA_FILE, 'w') as file:
+        json.dump(domains, file)
+
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     threading.Thread(target=schedule_check_domains, daemon=True).start()
