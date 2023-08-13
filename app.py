@@ -82,6 +82,7 @@ def index():
                     json.dump(domains, file)
 
     return render_template("index.html", domains=domains)
+
 if __name__ == "__main__":
     threading.Thread(target=schedule_check_domains, daemon=True).start()
     app.run(host='0.0.0.0', port=5000, debug=True)
