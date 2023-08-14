@@ -51,7 +51,7 @@ def check_domain_expiry():
             json.dump(domains, file)
 
 def schedule_check_domains():
-    schedule.every(1).day.do(check_domain_expiry)
+    schedule.every(1).hour.do(check_domain_expiry)
     while True:
         schedule.run_pending()
         time.sleep(1)
